@@ -9,14 +9,17 @@ import {
   cardText, 
   cardRating,
   featureInfoContainer,
+  buttonStyles
 } from "./TodaysMovie.theme"
+
+
 
 /* eslint-disable react/prop-types */
 const TodaysMovie = ({ movieOfTheDay }) => {
 
   return (
     <Box as='section' {...todaysMovieContainer}>
-      <Text as='h2' {...todaysMovieTitle}>Movie of the day</Text>
+      <Text as='h2' id='todays-movie' {...todaysMovieTitle}>Movie of the day</Text>
       <Card
         variant='elevated'
         {...card}
@@ -32,8 +35,8 @@ const TodaysMovie = ({ movieOfTheDay }) => {
             <Heading  {...cardTitle}>{movieOfTheDay?.title}</Heading>
 
             <Text {...cardText}>{movieOfTheDay?.overview}</Text>
-            <Button variant='solid' colorScheme='whiteAlpha'>
-              Learn More
+            <Button {...buttonStyles}>
+            <Text zIndex='1' color='#fff'>Learn More</Text>
             </Button>
             <Text {...cardRating}>{movieOfTheDay?.vote_average?.toFixed(1)}</Text>
           </CardBody>

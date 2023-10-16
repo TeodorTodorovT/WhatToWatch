@@ -24,10 +24,7 @@ const Home = () => {
     
     
   }, [])
-  console.log(randomMovie);
   return (
-
-
 
     <>
       <Hero as='section' randomMovie={randomMovie}/>

@@ -5,11 +5,14 @@ export const heroContainer = {
 }
 
 export const heroTitleContainer = {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: '3rem',
     margin:{
         base: '1rem',
         sm: '3rem',
       },
-      alignItems: 'center',
+    alignItems: 'flex-start',
 }
 
 export const heroTitle = {
@@ -28,4 +31,26 @@ export const heroTitle = {
      sm: '440px',
      md: '560px',
     },
+}
+
+export const buttonStyles = {
+    borderRadius: '0',
+    border: '0',
+    position: "relative",
+    backgroundColor: 'main.100',
+    overflow: "hidden",
+    boxShadow:  '1px 1px 50px -11px rgba(0,0,0,0.75)',
+    _before: {
+      position: "absolute",
+      content: `""`,
+      width: "100%",
+      height: "100%",
+      backgroundColor: 'secondary.100',
+      transition: 'transform 500ms ease-in-out',
+      transform: 'scaleX(0)',
+      transformOrigin: 'center',
+    },
+    _hover: {
+      _before: { transform: 'scaleX(1)' }
+    }
 }

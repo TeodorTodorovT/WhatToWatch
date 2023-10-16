@@ -1,8 +1,8 @@
-import {Text, Flex } from "@chakra-ui/react"
-import { heroContainer, heroTitleContainer, heroTitle } from "./Hero.theme"
+import { Text, Flex, Button, ButtonGroup } from "@chakra-ui/react"
+import { heroContainer, heroTitleContainer, heroTitle, buttonStyles } from "./Hero.theme"
 
 /* eslint-disable react/prop-types */
-const Hero = ({randomMovie}) => {
+const Hero = ({ randomMovie }) => {
 
 
   return (
@@ -15,8 +15,15 @@ const Hero = ({randomMovie}) => {
       {...heroContainer}
     >
       <Flex {...heroTitleContainer}>
-        <Text {...heroTitle}>
-          Trusted movie recommendations.</Text>
+        <Text {...heroTitle}>Trusted movie recommendations.</Text>
+        <ButtonGroup gap='1rem'>
+          <Button {...buttonStyles} onClick={() => {window.location.href='#todays-movie'}}>
+            <Text zIndex='1' color='#fff'>Todays Movie</Text>
+          </Button>
+          <Button {...buttonStyles}>
+            <Text zIndex='1' color='#fff'>Random Movie</Text>
+          </Button>
+        </ButtonGroup>
       </Flex>
     </Flex>
   )

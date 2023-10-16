@@ -78,3 +78,25 @@ export const featureInfoContainer = {
     textAlign: 'center',
     textShadow: '2px 2px 50px rgba(0,0,0,1)',
 }
+
+export const buttonStyles = {
+    borderRadius: '0',
+    border: '0',
+    position: "relative",
+    backgroundColor: 'main.100',
+    overflow: "hidden",
+    boxShadow:  '1px 1px 50px -11px rgba(0,0,0,0.75)',
+    _before: {
+      position: "absolute",
+      content: `""`,
+      width: "100%",
+      height: "100%",
+      backgroundColor: 'main.200',
+      transition: 'transform 500ms ease-in-out',
+      transform: 'scaleX(0)',
+      transformOrigin: 'center',
+    },
+    _hover: {
+      _before: { transform: 'scaleX(1)' }
+    }
+}
