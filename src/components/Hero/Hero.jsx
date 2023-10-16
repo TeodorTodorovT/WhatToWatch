@@ -1,15 +1,24 @@
-import { Box } from "@chakra-ui/react"
+import {Text, Flex } from "@chakra-ui/react"
+import { heroContainer, heroTitleContainer, heroTitle } from "./Hero.theme"
 
-const Hero = () => {
+/* eslint-disable react/prop-types */
+const Hero = ({randomMovie}) => {
+
+
   return (
-    <Box
-      width='100wh'
-      height='100vh'
-      background='  linear-gradient(
+    <Flex
+      background={
+        `linear-gradient(
         rgba(0, 0, 0, 0.5),
         rgba(0, 0, 0, 0.1)
-      ),url(https://api.agoodmovietowatch.com/wp-content/uploads/LIC-2-scaled.jpeg)'
-    ></Box>
+      ),url(https://image.tmdb.org/t/p/original/${randomMovie?.backdrop_path})`}
+      {...heroContainer}
+    >
+      <Flex {...heroTitleContainer}>
+        <Text {...heroTitle}>
+          Trusted movie recommendations.</Text>
+      </Flex>
+    </Flex>
   )
 }
 
