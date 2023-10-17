@@ -2,6 +2,8 @@
 
 **WhatToWatch is still work in progress**
 
+![localhost_5173_](https://github.com/TeodorTodorovT/WhatToWatch/assets/44364594/46156e84-ef26-494d-af4f-b850eaf3575a)
+
 This application will help you choose a movie or TV show to watch and will also give you movie suggestions base on different factors.
 
 ## Installation:
