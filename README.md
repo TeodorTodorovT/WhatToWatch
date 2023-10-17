@@ -15,6 +15,7 @@ To install Node plase take a look at this article:
 3. Clone the repo - `git clone https://github.com/TeodorTodorovT/WhatToWatch.git`
 4. Add a file named `.env.local` to the directory and enter the following inside:
 > VITE_BASE_URL = "https://api.themoviedb.org/3"
+>
 > VITE_DB_ACCESS_TOKEN = "{THE API KEY YOU GOT FROM TMDB}"
 5. Install NPM Packages - `npm install`
 6. Start the application - `npm run dev`
