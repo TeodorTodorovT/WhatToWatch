@@ -1,8 +1,8 @@
 export const headerStyles = {
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: 'transparent',
-    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    position: 'fixed',
     width: '100%',
     flexDirection: {
       base: 'column',
@@ -12,7 +12,21 @@ export const headerStyles = {
       base: '1rem',
       sm: '0'
     },
+    boxShadow: '1px 20px 100px 100px rgba(0,0,0,0.35)',
+    padding: '0.5rem 0',
+    zIndex: '999',
 };
+
+export const active = {
+    visibility: "visible",
+    transition: "all 0.5s"
+}
+
+export const hidden = {
+    visibility: "hidden",
+    transition: "all 0.5s",
+    transform: "translateY(-100%)"
+}
 
 export const logoStyles = {
     transition: 'transform 500ms ease-in-out',
@@ -38,7 +52,7 @@ export const inputStyles = {
     fontWeight:'bold',
     focusBorderColor:'main.100',
     _placeholder:{ 
-        color: 'gray.300' 
+        color: 'gray.200' 
     },
 }
 

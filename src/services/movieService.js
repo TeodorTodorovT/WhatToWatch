@@ -1,9 +1,6 @@
 const baseURL = import.meta.env.VITE_BASE_URL;
 const accessToken = import.meta.env.VITE_DB_ACCESS_TOKEN;
 
-console.log(baseURL);
-console.log(accessToken);
-
 export const getMovieOfTheDay = async () =>{
     const options = {
         method: 'GET',
