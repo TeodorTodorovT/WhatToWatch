@@ -5,6 +5,7 @@ const colors = {
     },
     secondary: {
         100: '#2b70a8',
+        200: '#235c8a'
     },
     background: {
         100: '#fff'

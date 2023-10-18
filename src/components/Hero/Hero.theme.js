@@ -1,7 +1,8 @@
 export const heroContainer = {
     width:'100wh',
-    height:'100vh',
+    height: '100vh',
     backgroundPosition:'center top',
+    backgroundAttachment: 'fixed'
 }
 
 export const heroTitleContainer = {
