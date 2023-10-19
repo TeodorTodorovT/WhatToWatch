@@ -1,7 +1,7 @@
 export const heroContainer = {
     width:'100wh',
     height: '100vh',
-    backgroundPosition:'center top',
+    backgroundPosition:'center center',
     backgroundAttachment: 'fixed'
 }
 
@@ -39,6 +39,7 @@ export const buttonStyles = {
     border: '0',
     position: "relative",
     backgroundColor: 'main.100',
+    color: '#fff',
     overflow: "hidden",
     boxShadow:  '1px 1px 50px -11px rgba(0,0,0,0.75)',
     _before: {
