@@ -103,7 +103,7 @@ console.log(currentMovies);
             <Text as='h1' fontSize='5xl' fontWeight='bold'>The most popular movies to watch</Text>
             <Text as='p'>Good Movies To Watch On Netflix & Elsewhere</Text>
             <Flex justifyContent='space-between' marginBottom='0.5rem'> 
-                <Text as='p'><span style={{'font-weight': 'bold'}}>{numberOfMovies}</span> movies</Text>
+                <Text as='p'><span style={{'fontWeight': 'bold'}}>{numberOfMovies}</span> movies</Text>
                 <Flex gap='0.5rem'>
                     <Text>Sort by:</Text>
                     <Flex gap='0.2rem'>
@@ -125,7 +125,7 @@ console.log(currentMovies);
                             borderRadius='0'
                             width='300px'
                             height='300px'
-                            
+
                             >
                             <Image
                                 position='absolute'
@@ -136,17 +136,26 @@ console.log(currentMovies);
                                 width='100%'
                                 height='100%'
                                 transition='transform .5s'
-                                
                                 _hover= {{
                                     transform: 'scale(1.05)',
-                                    // filter: 'brightness(50%)'
+                                    
                                 }}
+                                
                             />
-                            <Flex flexDirection='column' padding='0.5rem'>
+                            <Flex flexDirection='row' padding='0.5rem' justifyContent='space-between' gap='1rem'>
                                 <Heading size='md' position='relative'>{movie.title} ({movie.release_date.slice(0,4)})</Heading>
-                                {/* <Text position='relative'>
-                                    {movie.overview}
-                                </Text> */}
+                                <Text 
+                                    position='absolute' 
+                                    backgroundColor='main.100' 
+                                    bottom='0' 
+                                    right='0' 
+                                    width='4rem' 
+                                    height='4rem' 
+                                    padding='1.3rem 0 0 1.5rem' 
+                                    borderRadius='50px 0 0 0'
+                                    fontWeight= 'black'
+                                    fontSize='xl'
+                                >{movie?.vote_average?.toFixed(1)}</Text>
                             </Flex>
                                
 
