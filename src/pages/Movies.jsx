@@ -84,9 +84,9 @@ console.log(moviesSort);
                 <Flex gap='0.5rem'>
                     <Text>Sort by:</Text>
                     <Flex gap='0.2rem'>
-                        <Text style={moviesSort === 'popularity.desc' ? {'color':'main.100'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])}}>Popular</Text>
-                        <Text style={moviesSort === 'vote_average.desc' ? {'color':'main.100'} : {'color':'darkgray'}}  cursor='pointer' onClick={() => {setMoviesSort('vote_average.desc'); setPageNumber(1); setCurrentMovies([])}}>Top</Text>
-                        <Text style={moviesSort === 'primary_release_date.desc' ? {'color':'main.100'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('primary_release_date.desc'); setPageNumber(1); setCurrentMovies([])}}>New</Text>
+                        <Text style={moviesSort === 'popularity.desc' ? {'color':'red', 'fontWeight': 'bold'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])}}>Popular</Text>
+                        <Text style={moviesSort === 'vote_average.desc' ? {'color':'red',  'fontWeight': 'bold'} : {'color':'darkgray'}}  cursor='pointer' onClick={() => {setMoviesSort('vote_average.desc'); setPageNumber(1); setCurrentMovies([])}}>Top</Text>
+                        <Text style={moviesSort === 'primary_release_date.desc' ? {'color':'red',  'fontWeight': 'bold'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('primary_release_date.desc'); setPageNumber(1); setCurrentMovies([])}}>New</Text>
                     </Flex>
                 </Flex>
             </Flex>
