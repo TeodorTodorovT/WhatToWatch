@@ -1,3 +1,5 @@
+import { useParams } from "react-router-dom";
+
 const baseURL = import.meta.env.VITE_BASE_URL;
 const accessToken = import.meta.env.VITE_DB_ACCESS_TOKEN;
 
@@ -29,10 +31,12 @@ export const getRandomMovie = async () =>{
       }
 }
 
-export const getMovies = async () => {
+export const getMovies = async (pageNumber, moviesSort) => {
+  let currentDate = new Date().toJSON().slice(0, 10);
+
   try {
     const response = await fetch(
-      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc`,
+      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&primary_release_date.lte=${currentDate}&sort_by=${moviesSort}`,
       optionsGet
     )
     const data = await response.json();

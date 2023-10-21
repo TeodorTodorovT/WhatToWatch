@@ -1,19 +1,23 @@
-import { Box, Flex, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Button, Image, Card, Heading } from "@chakra-ui/react"
+import { Box, Flex, Text, Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel, Button } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { getMovies } from "../services/movieService"
 import { buttonStyles } from "../components/Hero/Hero.theme"
+import MovieCard from "../components/movieCard/MovieCard"
 
 const Movies = () => {
 
     const [currentMovies, setCurrentMovies] = useState([]);
     const [numberOfMovies, setNumberOfMovies] = useState(0);
+    const [pageNumber,  setPageNumber] = useState(1);
+    const [moviesSort, setMoviesSort] = useState('popularity.desc')
  
     useEffect(() => {
     
         const fetchMovies = async () => {
-            const moviesData = await getMovies()
+            const moviesData = await getMovies(pageNumber, moviesSort)
+            console.log(moviesData);
             if(currentMovies.length > 0) {
-                setCurrentMovies(oldMoviesList => moviesData.movies.forEach(movie => oldMoviesList.push(movie)))
+                setCurrentMovies(oldMoviesList => [...oldMoviesList, ...moviesData.movies])
             }else {
                 setCurrentMovies(moviesData.movies)
             }
@@ -24,8 +28,13 @@ const Movies = () => {
         fetchMovies();
     
 
-    }, [])
-console.log(currentMovies);
+    }, [pageNumber, moviesSort])
+
+    const loadNextPage = () => {
+        setPageNumber(currentPage => currentPage += 1)
+    }
+
+console.log(moviesSort);
 
   return (
     <Flex   
@@ -52,7 +61,7 @@ console.log(currentMovies);
                               <Box as="span" flex='1' textAlign='left' color='#fff' fontWeight='bold'>
                                   Providers
                               </Box>
-                              <AccordionIcon />
+                              <AccordionIcon color='#fff'/>
                           </AccordionButton>
                       </h2>
                       <AccordionPanel>
@@ -66,38 +75,6 @@ console.log(currentMovies);
                           </Flex>
                       </AccordionPanel>
                   </AccordionItem>
-                  <AccordionItem>
-                      <h2>
-                          <AccordionButton>
-                              <Box as="span" flex='1' textAlign='left'>
-                                  Section 2 title
-                              </Box>
-                              <AccordionIcon />
-                          </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                          commodo consequat.
-                      </AccordionPanel>
-                  </AccordionItem>
-                  <AccordionItem>
-                      <h2>
-                          <AccordionButton>
-                              <Box as="span" flex='1' textAlign='left'>
-                                  Section 2 title
-                              </Box>
-                              <AccordionIcon />
-                          </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                          commodo consequat.
-                      </AccordionPanel>
-                  </AccordionItem>
               </Accordion>
         <Flex flexDirection='column' position='relative' margin='11.375rem 2rem 2rem 2rem' color='#fff' width='80%'>
             <Text as='h1' fontSize='5xl' fontWeight='bold'>The most popular movies to watch</Text>
@@ -107,65 +84,20 @@ console.log(currentMovies);
                 <Flex gap='0.5rem'>
                     <Text>Sort by:</Text>
                     <Flex gap='0.2rem'>
-                        <Text color='red' fontWeight='bold'>Popular</Text>
-                        <Text color='darkgray'>Top</Text>
-                        <Text color='darkgray'>New</Text>
+                        <Text style={moviesSort === 'popularity.desc' ? {'color':'main.100'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])}}>Popular</Text>
+                        <Text style={moviesSort === 'vote_average.desc' ? {'color':'main.100'} : {'color':'darkgray'}}  cursor='pointer' onClick={() => {setMoviesSort('vote_average.desc'); setPageNumber(1); setCurrentMovies([])}}>Top</Text>
+                        <Text style={moviesSort === 'primary_release_date.desc' ? {'color':'main.100'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('primary_release_date.desc'); setPageNumber(1); setCurrentMovies([])}}>New</Text>
                     </Flex>
                 </Flex>
             </Flex>
             <Flex flexWrap='wrap'>
                 {currentMovies?.map(movie => {
                     return (
-                        <Card
-                            key={movie.id}
-                            overflow='hidden'
-                            variant='elevated'
-                            flexBasis='33.33%'
-                            color='#fff'
-                            borderRadius='0'
-                            width='300px'
-                            height='300px'
-
-                            >
-                            <Image
-                                position='absolute'
-                                src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
-                                objectFit='cover'
-                                objectPosition='center center'
-                                filter= 'brightness(80%)'
-                                width='100%'
-                                height='100%'
-                                transition='transform .5s'
-                                _hover= {{
-                                    transform: 'scale(1.05)',
-                                    
-                                }}
-                                
-                            />
-                            <Flex flexDirection='row' padding='0.5rem' justifyContent='space-between' gap='1rem'>
-                                <Heading size='md' position='relative'>{movie.title} ({movie.release_date.slice(0,4)})</Heading>
-                                <Text 
-                                    position='absolute' 
-                                    backgroundColor='main.100' 
-                                    bottom='0' 
-                                    right='0' 
-                                    width='4rem' 
-                                    height='4rem' 
-                                    padding='1.3rem 0 0 1.5rem' 
-                                    borderRadius='50px 0 0 0'
-                                    fontWeight= 'black'
-                                    fontSize='xl'
-                                >{movie?.vote_average?.toFixed(1)}</Text>
-                            </Flex>
-                               
-
-
-                            
-                            </Card>
+                        <MovieCard movie={movie} key={movie.id}/>
                     )
                 })}
             </Flex>
-            <Button {...buttonStyles} width='10rem' margin='1rem 0'>
+            <Button {...buttonStyles} width='10rem' margin='1rem 0' onClick={() => loadNextPage()}>
             <Text zIndex='1' color='#fff'>Load More</Text>
             </Button>
         </Flex>
