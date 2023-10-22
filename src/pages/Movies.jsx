@@ -34,7 +34,14 @@ const Movies = () => {
         setPageNumber(currentPage => currentPage += 1)
     }
 
-console.log(moviesSort);
+    const setSortOrder = (e) => {
+        setMoviesSort(e.target.id);
+        setPageNumber(1);
+        setCurrentMovies([]);
+    }
+
+    // setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])
+
 
   return (
     <Flex   
@@ -46,14 +53,16 @@ console.log(moviesSort);
 
               <Accordion allowToggle 
                 flexDirection='column' 
-                position='sticky'       
+                position={{base: 'absolute', lg: 'sticky'}}      
                 margin='14.5rem 2rem 2rem 2rem' 
-                width='20%'
+                width={{base: '70%', lg: '20%'}}
                 alignSelf='flex-start' 
                 background= 'rgba(255, 255, 255, 0.16)'
                 boxShadow= '0 4px 10px rgba(0, 0, 0, 0.1)'
                 backdropFilter= 'blur(4.6px)'
                 border= '1px solid rgba(255, 255, 255, 0.1)'
+                // display={{base: 'none', lg:'flex'}}
+                zIndex= '997'
                 >
                   <AccordionItem >
                       <h2>
@@ -83,10 +92,10 @@ console.log(moviesSort);
                 <Text as='p'><span style={{'fontWeight': 'bold'}}>{numberOfMovies}</span> movies</Text>
                 <Flex gap='0.5rem'>
                     <Text>Sort by:</Text>
-                    <Flex gap='0.2rem'>
-                        <Text style={moviesSort === 'popularity.desc' ? {'color':'red', 'fontWeight': 'bold'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])}}>Popular</Text>
-                        <Text style={moviesSort === 'vote_average.desc' ? {'color':'red',  'fontWeight': 'bold'} : {'color':'darkgray'}}  cursor='pointer' onClick={() => {setMoviesSort('vote_average.desc'); setPageNumber(1); setCurrentMovies([])}}>Top</Text>
-                        <Text style={moviesSort === 'primary_release_date.desc' ? {'color':'red',  'fontWeight': 'bold'} : {'color':'darkgray'}} cursor='pointer' onClick={() => {setMoviesSort('primary_release_date.desc'); setPageNumber(1); setCurrentMovies([])}}>New</Text>
+                    <Flex gap='0.2rem' onClick={(e) => setSortOrder(e)}>
+                        <Text style={moviesSort === 'popularity.desc' ? {'color':'red', 'fontWeight': 'bold'} : {'color':'darkgray'}} cursor='pointer' id='popularity.desc'>Popular</Text>
+                        <Text style={moviesSort === 'vote_average.desc' ? {'color':'red',  'fontWeight': 'bold'} : {'color':'darkgray'}}  cursor='pointer' id='vote_average.desc'>Top</Text>
+                        <Text style={moviesSort === 'primary_release_date.desc' ? {'color':'red',  'fontWeight': 'bold'} : {'color':'darkgray'}} cursor='pointer' id='primary_release_date.desc'>New</Text>
                     </Flex>
                 </Flex>
             </Flex>
