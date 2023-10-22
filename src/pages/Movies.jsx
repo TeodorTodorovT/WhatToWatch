@@ -35,9 +35,11 @@ const Movies = () => {
     }
 
     const setSortOrder = (e) => {
-        setMoviesSort(e.target.id);
-        setPageNumber(1);
-        setCurrentMovies([]);
+        if(e.target.id !== moviesSort){
+            setMoviesSort(e.target.id);
+            setPageNumber(1);
+            setCurrentMovies([]);
+        }
     }
 
     // setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])
