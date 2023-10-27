@@ -10,16 +10,19 @@ const Movies = () => {
     const [numberOfMovies, setNumberOfMovies] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
     const [moviesSort, setMoviesSort] = useState('popularity.desc');
-    const [minYearValue, setMinYearValue] = useState(2000)
+    const [minYearValue, setMinYearValue] = useState(1901)
     const [maxYearValue, setMaxYearValue] = useState(2023)
-    const [yearRange, setYearRange] = useState([2000, 2023])
+    const [yearRange, setYearRange] = useState([1901, 2023])
+    const [minScoreValue, setMinScoreValue] = useState(1)
+    const [maxScoreValue, setMaxScoreValue] = useState(10)
+    const [scoreRange, setScoreRange] = useState([1, 10])
 
     // console.log(sliderValue);
 
     useEffect(() => {
 
         const fetchMovies = async () => {
-            const moviesData = await getMovies(pageNumber, moviesSort, yearRange[0], yearRange[1])
+            const moviesData = await getMovies(pageNumber, moviesSort, yearRange[0], yearRange[1], scoreRange[0], scoreRange[1])
             console.log(moviesData);
             if (currentMovies.length > 0) {
                 setCurrentMovies(oldMoviesList => [...oldMoviesList, ...moviesData.movies])
@@ -33,7 +36,7 @@ const Movies = () => {
         fetchMovies();
 
 
-    }, [pageNumber, moviesSort, yearRange])
+    }, [pageNumber, moviesSort, yearRange, scoreRange])
 
     const loadNextPage = () => {
         setPageNumber(currentPage => currentPage += 1)
@@ -49,6 +52,12 @@ const Movies = () => {
 
     const changeYearRange = () => {
         setYearRange([minYearValue, maxYearValue])
+        setPageNumber(1);
+        setCurrentMovies([]);
+    }
+
+    const changeScoreRange = () => {
+        setScoreRange([minScoreValue, maxScoreValue])
         setPageNumber(1);
         setCurrentMovies([]);
     }
@@ -87,10 +96,10 @@ const Movies = () => {
                             <AccordionIcon color='#fff' />
                         </AccordionButton>
                     </h2>
-                    <AccordionPanel paddingTop='1rem'>
+                    <AccordionPanel padding='1rem 2rem'>
                         <RangeSlider
                             aria-label={['min', 'max']}
-                            defaultValue={[2000, 2023]}
+                            defaultValue={[1901, 2023]}
                             min={1901}
                             max={2023}
                             onChange={(val) => { setMinYearValue(val[0]); setMaxYearValue(val[1]); }}
@@ -102,18 +111,13 @@ const Movies = () => {
                             <RangeSliderThumb index={0} value={minYearValue} textAlign='center'
                                 backgroundColor='main.100'
                                 color='white'
-                                width='3rem'
-                                height='1.5rem'
-                                marginTop='-1rem'
 
 
-                            >{minYearValue}</RangeSliderThumb>
+                            ><Text fontSize='xs' margin='0 0 2.5rem -2rem'>{minYearValue}</Text></RangeSliderThumb>
                             <RangeSliderThumb index={1} value={maxYearValue} textAlign='center'
                                 backgroundColor='main.100'
                                 color='white'
-                                width='3rem'
-                                height='1.5rem'
-                                marginTop='1rem'>{maxYearValue}</RangeSliderThumb>
+                            ><Text fontSize='xs' margin='0 0 2.5rem 2rem'>{minYearValue === maxYearValue ? '' : maxYearValue}</Text></RangeSliderThumb>
                         </RangeSlider>
                     </AccordionPanel>
                 </AccordionItem>
@@ -121,27 +125,41 @@ const Movies = () => {
                     <h2>
                         <AccordionButton>
                             <Box as="span" flex='1' textAlign='left' color='#fff' fontWeight='bold'>
-                                Providers
+                                Score
                             </Box>
                             <AccordionIcon color='#fff' />
                         </AccordionButton>
                     </h2>
-                    <AccordionPanel>
-                        <Flex flexDirection='row' flexWrap='wrap' gap='5px'>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                        </Flex>
+                    <AccordionPanel padding='1rem 2rem'>
+                        <RangeSlider
+                            aria-label={['min', 'max']}
+                            defaultValue={[1, 10]}
+                            min={1}
+                            max={10}
+                            onChange={(val) => { setMinScoreValue(val[0]); setMaxScoreValue(val[1]); }}
+                            onChangeEnd={() => changeScoreRange()}
+                        >
+                            <RangeSliderTrack height='.5rem' borderRadius='30px'> 
+                                <RangeSliderFilledTrack backgroundColor='main.100' />
+                            </RangeSliderTrack>
+                            <RangeSliderThumb index={0} value={minScoreValue} textAlign='center'
+                                backgroundColor='main.100'
+                                color='white'
+
+
+                            ><Text fontSize='xs' margin='0 0 2.5rem 0'>{minScoreValue}</Text></RangeSliderThumb>
+                            <RangeSliderThumb index={1} value={maxScoreValue} textAlign='center'
+                                backgroundColor='main.100'
+                                color='white'
+                            ><Text fontSize='xs' margin='0 0 2.5rem 0'>{minScoreValue === maxScoreValue ? '' : maxScoreValue}</Text></RangeSliderThumb>
+                        </RangeSlider>
                     </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem >
                     <h2>
                         <AccordionButton>
                             <Box as="span" flex='1' textAlign='left' color='#fff' fontWeight='bold'>
-                                Providers
+                                Genre
                             </Box>
                             <AccordionIcon color='#fff' />
                         </AccordionButton>
@@ -157,66 +175,7 @@ const Movies = () => {
                         </Flex>
                     </AccordionPanel>
                 </AccordionItem>
-                <AccordionItem >
-                    <h2>
-                        <AccordionButton>
-                            <Box as="span" flex='1' textAlign='left' color='#fff' fontWeight='bold'>
-                                Providers
-                            </Box>
-                            <AccordionIcon color='#fff' />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel>
-                        <Flex flexDirection='row' flexWrap='wrap' gap='5px'>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                        </Flex>
-                    </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem >
-                    <h2>
-                        <AccordionButton>
-                            <Box as="span" flex='1' textAlign='left' color='#fff' fontWeight='bold'>
-                                Providers
-                            </Box>
-                            <AccordionIcon color='#fff' />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel>
-                        <Flex flexDirection='row' flexWrap='wrap' gap='5px'>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                        </Flex>
-                    </AccordionPanel>
-                </AccordionItem>
-                <AccordionItem >
-                    <h2>
-                        <AccordionButton>
-                            <Box as="span" flex='1' textAlign='left' color='#fff' fontWeight='bold'>
-                                Providers
-                            </Box>
-                            <AccordionIcon color='#fff' />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel>
-                        <Flex flexDirection='row' flexWrap='wrap' gap='5px'>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                        </Flex>
-                    </AccordionPanel>
-                </AccordionItem>
+
             </Accordion>
             <Flex flexDirection='column' position='relative' margin='11.375rem 2rem 2rem 2rem' color='#fff' width='80%'>
                 <Text as='h1' fontSize='5xl' fontWeight='bold'>The most popular movies to watch</Text>

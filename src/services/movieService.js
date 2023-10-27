@@ -32,6 +32,7 @@ export const getRandomMovie = async () =>{
 }
 
 export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1865-01-01', releaseDateLTE = currentDate, voteAverageGTE = 1, voteAverageLTE = 10) => {
+
   try {
     const response = await fetch(
       `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&primary_release_date.gte=${releaseDateGTE}-01-01&primary_release_date.lte=${releaseDateLTE + 1}-01-01&sort_by=${moviesSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=1000`,
