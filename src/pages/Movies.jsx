@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { getMovies } from "../services/movieService"
 import { buttonStyles } from "../components/Hero/Hero.theme"
 import MovieCard from "../components/movieCard/MovieCard"
+import { genres } from "../common/genres"
 
 const Movies = () => {
 
@@ -10,24 +11,32 @@ const Movies = () => {
     const [numberOfMovies, setNumberOfMovies] = useState(0);
     const [pageNumber, setPageNumber] = useState(1);
     const [moviesSort, setMoviesSort] = useState('popularity.desc');
-    const [minYearValue, setMinYearValue] = useState(1901)
-    const [maxYearValue, setMaxYearValue] = useState(2023)
-    const [yearRange, setYearRange] = useState([1901, 2023])
-    const [minScoreValue, setMinScoreValue] = useState(1)
-    const [maxScoreValue, setMaxScoreValue] = useState(10)
-    const [scoreRange, setScoreRange] = useState([1, 10])
+    const [minYearValue, setMinYearValue] = useState(1901);
+    const [maxYearValue, setMaxYearValue] = useState(2023);
+    const [yearRange, setYearRange] = useState([1901, 2023]);
+    const [minScoreValue, setMinScoreValue] = useState(1);
+    const [maxScoreValue, setMaxScoreValue] = useState(10);
+    const [scoreRange, setScoreRange] = useState([1, 10]);
+    const [selectedGeneres, setSelectedGeneres] = useState([]);
+    const [noResults, setNoResults] = useState(false);
+
 
     // console.log(sliderValue);
 
     useEffect(() => {
 
         const fetchMovies = async () => {
-            const moviesData = await getMovies(pageNumber, moviesSort, yearRange[0], yearRange[1], scoreRange[0], scoreRange[1])
+            const moviesData = await getMovies(pageNumber, moviesSort, yearRange[0], yearRange[1], scoreRange[0], scoreRange[1], selectedGeneres.join(','))
             console.log(moviesData);
-            if (currentMovies.length > 0) {
-                setCurrentMovies(oldMoviesList => [...oldMoviesList, ...moviesData.movies])
-            } else {
-                setCurrentMovies(moviesData.movies)
+
+            if(moviesData.totalMovies === 0) {
+                setNoResults(true);
+            }else{
+                if (currentMovies.length > 0) {
+                    setCurrentMovies(oldMoviesList => [...oldMoviesList, ...moviesData.movies])
+                } else {
+                    setCurrentMovies(moviesData.movies)
+                }
             }
             setNumberOfMovies(moviesData.totalMovies)
         }
@@ -36,7 +45,7 @@ const Movies = () => {
         fetchMovies();
 
 
-    }, [pageNumber, moviesSort, yearRange, scoreRange])
+    }, [pageNumber, moviesSort, yearRange, scoreRange, selectedGeneres])
 
     const loadNextPage = () => {
         setPageNumber(currentPage => currentPage += 1)
@@ -62,7 +71,21 @@ const Movies = () => {
         setCurrentMovies([]);
     }
 
-    // setMoviesSort('popularity.desc'); setPageNumber(1); setCurrentMovies([])
+    const toggleGenre = (e) => {
+        const genreId = Object.keys(genres).find(key => genres[key].genre === e.target.innerText);
+        console.log(genreId);
+        if(selectedGeneres.includes(genreId)) {
+            setSelectedGeneres(currentGenres => currentGenres.filter(genre => genre !== genreId))
+        }else{
+            setSelectedGeneres(currentGenres => [...currentGenres, genreId]);
+        }
+        setPageNumber(1);
+        setCurrentMovies([]);
+
+    }
+
+    console.log(selectedGeneres);
+    console.log(noResults);
 
 
     return (
@@ -105,7 +128,7 @@ const Movies = () => {
                             onChange={(val) => { setMinYearValue(val[0]); setMaxYearValue(val[1]); }}
                             onChangeEnd={() => changeYearRange()}
                         >
-                            <RangeSliderTrack height='.5rem' borderRadius='30px'> 
+                            <RangeSliderTrack height='.5rem' borderRadius='30px'>
                                 <RangeSliderFilledTrack backgroundColor='main.100' />
                             </RangeSliderTrack>
                             <RangeSliderThumb index={0} value={minYearValue} textAlign='center'
@@ -139,7 +162,7 @@ const Movies = () => {
                             onChange={(val) => { setMinScoreValue(val[0]); setMaxScoreValue(val[1]); }}
                             onChangeEnd={() => changeScoreRange()}
                         >
-                            <RangeSliderTrack height='.5rem' borderRadius='30px'> 
+                            <RangeSliderTrack height='.5rem' borderRadius='30px'>
                                 <RangeSliderFilledTrack backgroundColor='main.100' />
                             </RangeSliderTrack>
                             <RangeSliderThumb index={0} value={minScoreValue} textAlign='center'
@@ -164,14 +187,23 @@ const Movies = () => {
                             <AccordionIcon color='#fff' />
                         </AccordionButton>
                     </h2>
-                    <AccordionPanel>
-                        <Flex flexDirection='row' flexWrap='wrap' gap='5px'>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
-                            <Box width='80px' height='50px' backgroundColor='tomato'></Box>
+                    <AccordionPanel padding='0'>
+                        <Flex 
+                            flexDirection='column' 
+                            maxHeight='300px' 
+                            overflowY='scroll' 
+                            sx={{
+                                "::-webkit-scrollbar": {
+                                    display: "none",
+                                },
+                            }}
+                        >
+                            {
+
+                                Object.values(genres).map(genre => (<Box key={genre.id} width='100%' padding='0.5rem 2rem' cursor='pointer' color='#fff' marginTop='0.2rem' _hover={{ 'backgroundColor': 'main.100' }} backgroundColor={selectedGeneres.includes(genre.id.toString()) ? 'main.100' : 'none'} onClick={(e) => toggleGenre(e)}>{genre.genre}</Box>))
+                            }
+
+
                         </Flex>
                     </AccordionPanel>
                 </AccordionItem>
@@ -193,19 +225,28 @@ const Movies = () => {
                 </Flex>
                 <Flex flexWrap='wrap'>
                     {
-                        currentMovies.length > 0 ?
+                        currentMovies.length > 0 && !noResults ?
                             currentMovies?.map(movie => {
                                 return (
                                     <MovieCard movie={movie} key={movie.id} />
                                 )
-                            }) : <Spinner
-                                thickness='4px'
-                                speed='0.65s'
-                                emptyColor='gray.200'
-                                color='main.100'
-                                size='xl'
-                                margin='300px auto'
-                            />
+                            }) 
+                            : currentMovies.length === 0 && noResults ?
+                                <Text
+                                    fontSize='2xl'
+                                    margin='300px auto' 
+                                    color='main.100' 
+                                    fontWeight='bold'
+                                >No Results</Text>
+                            :   <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='main.100'
+                            size='xl'
+                            margin='300px auto'
+                        />
+                            
                     }
                 </Flex>
                 <Button {...buttonStyles} width='10rem' margin='1rem 0' onClick={() => loadNextPage()}>
