@@ -37,6 +37,7 @@ const Movies = () => {
                 } else {
                     setCurrentMovies(moviesData.movies)
                 }
+                setNoResults(false);
             }
             setNumberOfMovies(moviesData.totalMovies)
         }
