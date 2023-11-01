@@ -3,13 +3,28 @@ import { HOME_PAGE } from "../../common/routes"
 import { Flex, Link as ChakraLink, Input, InputGroup, InputRightElement } from "@chakra-ui/react"
 import { Search2Icon } from "@chakra-ui/icons"
 import { NavLink as ReactRouterLink } from "react-router-dom"
-
-import { headerStyles, logoStyles, inputGroupStyles, inputStyles, searchIconStyles, navStyles, navLinkStyles} from "./Header.theme"
+import { headerStyles, logoStyles, inputGroupStyles, inputStyles, searchIconStyles, navStyles, navLinkStyles, active, hidden} from "./Header.theme"
+import { useState, useEffect } from "react"
+import useScrollListener from "../../hooks/useScrollListener"
 
 const Header = () => {
+
+  const [show, setShow] = useState(true);
+  const scroll = useScrollListener();
+  useEffect(() => {
+    if(scroll.y > 200 && scroll.y - scroll.lastY > 0)
+      setShow(false);
+    else
+      setShow(true);
+
+  }, [scroll.y, scroll.lastY]);
+
+  
+
   return (
     <Flex 
       {...headerStyles}
+      style={show ? {...active} : {...hidden}}
     >
       <ChakraLink
         as={ReactRouterLink}
