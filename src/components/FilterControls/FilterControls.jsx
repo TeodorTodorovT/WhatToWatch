@@ -205,7 +205,7 @@ const FilterControlls = ({ setPageNumber, setCurrentMovies, setMoviesFilter }) =
                     <AccordionPanel padding='0'>
                         <Flex
                             flexDirection='column'
-                            maxHeight='300px'
+                            maxHeight='200px'
                             overflowY='scroll'
                             sx={{
                                 "::-webkit-scrollbar": {
