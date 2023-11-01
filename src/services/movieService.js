@@ -9,7 +9,7 @@ const optionsGet = {
   }
 }
 
-const currentDate = new Date().toJSON().slice(0, 10);
+const currentYear = new Date().toJSON().slice(0, 4);
 
 export const getMovieOfTheDay = async () =>{
       try {
@@ -31,11 +31,11 @@ export const getRandomMovie = async () =>{
       }
 }
 
-export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1865-01-01', releaseDateLTE = currentDate, voteAverageGTE = 1, voteAverageLTE = 10, genres) => {
+export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1901-01-01', releaseDateLTE = currentYear, voteAverageGTE = 1, voteAverageLTE = 10, genres) => {
 
   try {
     const response = await fetch(
-      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&primary_release_date.gte=${releaseDateGTE}-01-01&primary_release_date.lte=${releaseDateLTE + 1}-01-01&sort_by=${moviesSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=1000&with_genres=${genres}`,
+      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&primary_release_date.gte=${releaseDateGTE}-01-01&primary_release_date.lte=${releaseDateLTE}-12-31&sort_by=${moviesSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=1000&with_genres=${genres}`,
       optionsGet
     )
     const data = await response.json();
