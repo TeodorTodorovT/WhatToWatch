@@ -2,8 +2,8 @@ import { Flex, Text, Button } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { getMovies } from "../services/movieService"
 import { buttonStyles } from "../components/Hero/Hero.theme"
-import FilterControlls from "../components/FilterControlls/FilterControlls"
-import SortControlls from "../components/SortControlls/SortControlls"
+import FilterControlls from "../components/FilterControls/FilterControls"
+import SortControlls from "../components/SortControls/SortControls"
 import MoviesGrid from "../components/MoviesGrid/MoviesGrid"
 
 const Movies = () => {
@@ -58,7 +58,7 @@ const Movies = () => {
 
     return (
         <Flex
-            backgroundColor='#121212'
+            backgroundColor='background.100'
             flexDirection='row'
             height='100%'
 
@@ -69,8 +69,8 @@ const Movies = () => {
                 setMoviesFilter={setMoviesFilter}
 
             />
-            <Flex flexDirection='column' position='relative' margin='11.375rem 2rem 2rem 2rem' color='#fff' width='80%'>
-                <Text as='h1' fontSize='5xl' fontWeight='bold'>The most popular movies to watch</Text>
+            <Flex flexDirection='column' position='relative' margin={{base: '14.5rem 1rem 1rem 1rem', lg:'11.375rem 2rem 2rem 2rem'}} color='#fff' width={{base:'100%', lg:'80%'}}>
+                <Text as='h1' fontSize={{base:'3xl', lg:'5xl'}} fontWeight='bold'>The most popular movies to watch</Text>
                 <Text as='p'>Good Movies To Watch On Netflix & Elsewhere</Text>
                 <Flex justifyContent='space-between' marginBottom='0.5rem'>
                     <Text as='p'><span style={{ 'fontWeight': 'bold' }}>{numberOfMovies}</span> movies</Text>

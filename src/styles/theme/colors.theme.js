@@ -8,7 +8,7 @@ const colors = {
         200: '#235c8a'
     },
     background: {
-        100: '#fff'
+        100: '#121212',
     }
 
   };

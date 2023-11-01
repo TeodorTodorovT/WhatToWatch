@@ -11,7 +11,7 @@ const MovieCard = ({ movie }) => {
         <Card
             overflow='hidden'
             variant='elevated'
-            flexBasis='33.33%'
+            flexBasis={{base: '100%', md: '50%', lg:'33.33%'}}
             color='#fff'
             borderRadius='0'
             width='300px'
