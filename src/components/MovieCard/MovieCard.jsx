@@ -34,7 +34,7 @@ const MovieCard = ({ movie }) => {
 
             />
             <Flex flexDirection='row' padding='0.5rem' justifyContent='space-between' gap='1rem'>
-                <Heading size='md' position='relative'>{movie?.title} ({movie.release_date?.slice(0, 4)})</Heading>
+                <Heading size='md' position='relative'>{movie?.title || movie?.original_name} ({movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0,4)})</Heading>
                 <Text
                     position='absolute'
                     backgroundColor='main.100'

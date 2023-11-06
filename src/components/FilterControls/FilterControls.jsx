@@ -26,7 +26,7 @@ import { useState, useEffect, useRef } from "react";
 import { genres } from '../../common/genres'
 
 
-const FilterControlls = ({ setPageNumber, setCurrentMovies, setMoviesFilter }) => {
+const FilterControlls = ({ setPageNumber, setCurrentItems, setItemsFilter }) => {
 
 
     const [minYearValue, setMinYearValue] = useState(1901);
@@ -38,33 +38,33 @@ const FilterControlls = ({ setPageNumber, setCurrentMovies, setMoviesFilter }) =
     const [selectedGeneres, setSelectedGeneres] = useState([]);
 
     useEffect(() => {
-        setMoviesFilter({ yearRange, scoreRange, selectedGeneres })
-    }, [yearRange, scoreRange, selectedGeneres, setMoviesFilter])
+        setItemsFilter({ yearRange, scoreRange, selectedGeneres })
+    }, [yearRange, scoreRange, selectedGeneres, setItemsFilter])
 
 
 
     const changeYearRange = () => {
         setYearRange([minYearValue, maxYearValue])
         setPageNumber(1);
-        setCurrentMovies([]);
+        setCurrentItems([]);
     }
 
     const changeScoreRange = () => {
         setScoreRange([minScoreValue, maxScoreValue])
         setPageNumber(1);
-        setCurrentMovies([]);
+        setCurrentItems([]);
     }
 
     const toggleGenre = (e) => {
         const genreId = Object.keys(genres).find(key => genres[key].genre === e.target.innerText);
-        console.log(genreId);
+        
         if (selectedGeneres.includes(genreId)) {
             setSelectedGeneres(currentGenres => currentGenres.filter(genre => genre !== genreId))
         } else {
             setSelectedGeneres(currentGenres => [...currentGenres, genreId]);
         }
         setPageNumber(1);
-        setCurrentMovies([]);
+        setCurrentItems([]);
 
     }
 
@@ -118,7 +118,6 @@ const FilterControlls = ({ setPageNumber, setCurrentMovies, setMoviesFilter }) =
 
                 <DrawerBody padding='0'>
                 <Accordion 
-                allowToggle
                 allowMultiple
                 index={[0,1,2]}
                 flexDirection='column'
@@ -240,7 +239,6 @@ const FilterControlls = ({ setPageNumber, setCurrentMovies, setMoviesFilter }) =
 
             <Accordion 
                 allowMultiple
-                allowToggle
                 flexDirection='column'
                 position='sticky'
                 top='10rem'
