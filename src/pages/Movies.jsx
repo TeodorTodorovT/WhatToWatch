@@ -28,7 +28,6 @@ const Movies = () => {
                 moviesFilter.scoreRange[1], 
                 moviesFilter.selectedGeneres.join(',')
             )
-            console.log(moviesData);
 
             if(moviesData.totalMovies === 0) {
                 setNoResults(true);
@@ -65,8 +64,8 @@ const Movies = () => {
         >
             <FilterControlls 
                 setPageNumber={setPageNumber} 
-                setCurrentMovies={setCurrentMovies}
-                setMoviesFilter={setMoviesFilter}
+                setCurrentItems={setCurrentMovies}
+                setItemsFilter={setMoviesFilter}
 
             />
             <Flex flexDirection='column' position='relative' margin={{base: '14.5rem 1rem 1rem 1rem', lg:'11.375rem 2rem 2rem 2rem'}} color='#fff' width={{base:'100%', lg:'80%'}}>
@@ -76,13 +75,13 @@ const Movies = () => {
                     <Text as='p'><span style={{ 'fontWeight': 'bold' }}>{numberOfMovies}</span> movies</Text>
                     <SortControlls 
                         setPageNumber={setPageNumber} 
-                        setCurrentMovies={setCurrentMovies}
-                        setMoviesSort={setMoviesSort}    
-                        moviesSort={moviesSort}             
+                        setCurrentItems={setCurrentMovies}
+                        setItemsSort={setMoviesSort}    
+                        itemsSort={moviesSort}             
                     />
                 </Flex>
                 <MoviesGrid
-                    currentMovies={currentMovies}
+                    currentItems={currentMovies}
                     noResults={noResults}
                 />
                 <Button {...buttonStyles} width='10rem' margin='1rem 0' isDisabled={currentMovies.length === numberOfMovies ? true : false} onClick={() => loadNextPage()}>
