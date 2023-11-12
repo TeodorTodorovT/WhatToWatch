@@ -7,9 +7,9 @@ const MoviesGrid = ({currentItems, noResults}) => {
         <Flex flexWrap='wrap'>
             {
                 currentItems.length > 0 && !noResults ?
-                    currentItems?.map(movie => {
+                    currentItems?.map(item => {
                         return (
-                            <MovieCard movie={movie} key={movie.id} />
+                            <MovieCard item={item} key={item.id} />
                         )
                     })
                     : currentItems.length === 0 && noResults ?

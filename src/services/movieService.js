@@ -48,3 +48,29 @@ export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1901-0
     console.log(error);
   }
 }
+
+export const getMovie = async (id) =>{
+  try {
+    const response = await fetch(
+      `${baseURL}/movie/${id}`,
+      optionsGet
+    )
+    const data = await response.json();
+    return data;
+  } catch (error){
+    console.log(error);
+  }
+}
+
+export const getMovieProviders = async (id) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/movie/${id}/watch/providers`,
+      optionsGet
+    )
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -5,8 +5,10 @@ import {
     Heading,
     Text,
 } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ item }) => {
+    const navigate = useNavigate();
     return (
         <Card
             overflow='hidden'
@@ -16,11 +18,12 @@ const MovieCard = ({ movie }) => {
             borderRadius='0'
             width='300px'
             height='300px'
-
+            cursor='pointer'
+            onClick={() => navigate(`/movie/${item.id}`)}
         >
             <Image
                 position='absolute'
-                src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/original/${item?.backdrop_path}`}
                 objectFit='cover'
                 objectPosition='center center'
                 filter='brightness(80%)'
@@ -34,7 +37,7 @@ const MovieCard = ({ movie }) => {
 
             />
             <Flex flexDirection='row' padding='0.5rem' justifyContent='space-between' gap='1rem'>
-                <Heading size='md' position='relative'>{movie?.title || movie?.original_name} ({movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0,4)})</Heading>
+                <Heading size='md' position='relative'>{item?.title || item?.original_name} ({item.release_date?.slice(0, 4) || item.first_air_date?.slice(0,4)})</Heading>
                 <Text
                     position='absolute'
                     backgroundColor='main.100'
@@ -48,8 +51,8 @@ const MovieCard = ({ movie }) => {
                     fontSize='lg'
                 >
                 {  
-                    movie?.vote_average > 0 ?
-                    movie?.vote_average?.toFixed(1) :
+                    item?.vote_average > 0 ?
+                    item?.vote_average?.toFixed(1) :
                     'N/A'
                 }
                 </Text>

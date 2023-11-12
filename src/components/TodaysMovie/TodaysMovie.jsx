@@ -1,4 +1,5 @@
-import { Card, Image, Stack, CardBody, Heading, Text, Button, Box, Flex } from "@chakra-ui/react"
+import { Card, Image, Stack, CardBody, Heading, Text, Button, Box, Flex , Link as ChakraLink} from "@chakra-ui/react"
+import { NavLink as ReactRouterLink } from "react-router-dom"
 import { 
   todaysMovieContainer, 
   todaysMovieTitle, 
@@ -16,7 +17,7 @@ import {
 
 /* eslint-disable react/prop-types */
 const TodaysMovie = ({ movieOfTheDay }) => {
-
+  console.log(movieOfTheDay);
   return (
     <Box as='section' {...todaysMovieContainer}>
       <Text as='h2' id='todays-movie' {...todaysMovieTitle}>Movie of the day</Text>
@@ -36,7 +37,7 @@ const TodaysMovie = ({ movieOfTheDay }) => {
 
             <Text {...cardText}>{movieOfTheDay?.overview}</Text>
             <Button {...buttonStyles}>
-            <Text zIndex='1' color='#fff'>Learn More</Text>
+            <ChakraLink as={ReactRouterLink} to={`/movie/${movieOfTheDay.id}`} zIndex='1' color='#fff'>Learn More</ChakraLink>
             </Button>
             <Text {...cardRating}>{movieOfTheDay?.vote_average?.toFixed(1)}</Text>
           </CardBody>
