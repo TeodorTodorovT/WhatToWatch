@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { getMovie, getMovieProviders } from "../services/movieService";
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { getMovie, getMovieProviders, getMovieTrailer} from "../services/movieService";
+import { Box, Flex, Image, Text, Spinner, AspectRatio} from "@chakra-ui/react";
 import { isoLangs } from "../common/isoLangs";
 
 
@@ -13,12 +13,15 @@ const ItemDetails = ({type = 'movie'}) => {
     useEffect(() => {
         const fetchMovie = async () =>{
             const movieData = await getMovie(id);
-            const movieProviders = await getMovieProviders(id);
-            setitem({...movieData, movieProviders});
+            const providers = await getMovieProviders(id);
+            const trailer = await getMovieTrailer(id);
+            setitem({...movieData, providers, trailer});
         }
         fetchMovie();
     },[id]);
-    console.log();
+
+    // console.log(item?.trailer[0].key);
+
     return (
         <Box backgroundColor='background.100' >
             <Flex gap='4rem' padding='10rem 0' margin='0 2rem'>
@@ -51,15 +54,57 @@ const ItemDetails = ({type = 'movie'}) => {
                             <Text color='#e1e1e1' fontWeight='normal'>Overview:</Text>   
                             <Text color='#afafaf'>{item?.overview}</Text>
                         </Flex>
-                        <Flex flexDirection='column'>
-                            <Text color='#e1e1e1' fontWeight='normal'>Available on:</Text>
-                            <Text color='#afafaf'>{item?.movieProviders?.results?.BG?.buy[0]?.provider_name}</Text>
-                        </Flex>
+                        {item?.providers?.results?.US?.buy &&
+                            <Flex flexDirection='column'>
+                                <Text color='#e1e1e1' fontWeight='normal'>Available to buy on:</Text>
+                                <Text color='#e1e1e1' fontWeight='thin' fontSize='xs'>*US region*</Text>
+                                <Flex flexWrap='wrap' gap='4px'>
+                                    {item?.providers?.results?.US?.buy.map(provider =>  
+                                        <Image key={provider.link + provider.logo_path} src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} width='20%' fallbackSrc="/placeholder.jpg"/>
+                                    )}
+                                </Flex>
+                            </Flex>
+                        }
+                        {item?.providers?.results?.US?.rent &&
+                            <Flex flexDirection='column'>
+                                <Text color='#e1e1e1' fontWeight='normal'>Available to rent on:</Text>
+                                <Text color='#e1e1e1' fontWeight='thin' fontSize='xs'>*US region*</Text>
+                                <Flex flexWrap='wrap' gap='4px'>
+                                    {item?.providers?.results?.US?.rent.map(provider =>  
+                                        <Image key={provider.link + provider.logo_path} src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} width='20%' fallbackSrc="/placeholder.jpg"/>
+                                    )}
+                                </Flex>
+                            </Flex>
+                        }
+                        {item?.providers?.results?.US?.buy === undefined && item?.providers?.results?.US?.rent === undefined &&
+                            <Text color='#e1e1e1' fontWeight='normal'>*Not available online</Text>
+                        }
+
+
+                        
+
                     </Flex>
                 </Flex>
-                <Flex>
-                    <Box flexBasis='70%' backgroundColor='red'>
-                    </Box>
+                <Flex flexBasis='70%'>
+                    {item.trailer ? 
+                        <AspectRatio width='100%' maxH='50%' ratio={16/9}>
+                            <iframe //HurjfO_TDlQ
+                             src={`https://www.youtube.com/embed/${item?.trailer[0].key}`}
+                             
+                             />
+                        </AspectRatio>
+
+                        :
+                        <Spinner 
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='main.100'
+                            size='xl'
+                            margin='300px auto'
+                        />
+                    
+                    }
                 </Flex>
             </Flex>
         </Box>

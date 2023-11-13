@@ -74,3 +74,17 @@ export const getMovieProviders = async (id) => {
     console.log(error);
   }
 }
+
+export const getMovieTrailer = async (id) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/movie/${id}/videos`,
+      optionsGet
+    )
+    const data = await response.json();
+    const result = data.results.filter(item => item.type === 'Trailer');
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
