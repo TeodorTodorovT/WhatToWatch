@@ -1,5 +1,5 @@
 import { Flex, Text, Spinner } from "@chakra-ui/react"
-import MovieCard from "../movieCard/MovieCard"
+import MovieCard from "../MovieCard/MovieCard"
 
 const MoviesGrid = ({currentItems, noResults}) => {
 
