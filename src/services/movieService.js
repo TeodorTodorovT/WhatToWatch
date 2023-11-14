@@ -88,3 +88,17 @@ export const getMovieTrailer = async (id) => {
     console.log(error);
   }
 }
+
+export const getSimilarMovies = async (id) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/movie/${id}/recommendations`,
+      optionsGet
+    )
+    const data = await response.json();
+    
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { getMovie, getMovieProviders, getMovieTrailer} from "../services/movieService";
-import { Box, Flex, Image, Text, Spinner, AspectRatio} from "@chakra-ui/react";
+import { getMovie, getMovieProviders, getMovieTrailer, getSimilarMovies} from "../services/movieService";
+import { Box, Flex, Image, Text, Spinner} from "@chakra-ui/react";
 import { isoLangs } from "../common/isoLangs";
+import MoviesGrid from "../components/MoviesGrid/MoviesGrid";
 
 
 const ItemDetails = ({type = 'movie'}) => {
     const {id} = useParams();
     const [item, setitem] = useState({})
+    const [similarNoResults, setSimilarNoResults] = useState(false);
+    console.log(similarNoResults);
 
     
     useEffect(() => {
@@ -15,19 +18,26 @@ const ItemDetails = ({type = 'movie'}) => {
             const movieData = await getMovie(id);
             const providers = await getMovieProviders(id);
             const trailer = await getMovieTrailer(id);
-            setitem({...movieData, providers, trailer});
+            const similar = await getSimilarMovies(id)
+            setitem({...movieData, providers, trailer, similar});
+            if(similar.success === false) {
+                setSimilarNoResults(true);
+            }else{
+                setSimilarNoResults(false);
+            }
+            
         }
         fetchMovie();
     },[id]);
 
-    // console.log(item?.trailer[0].key);
+    console.log(item);
 
     return (
         <Box backgroundColor='background.100' >
             <Flex gap='4rem' padding='10rem 0' margin='0 2rem'>
-                <Flex backgroundColor='#343434' flexDirection='column' flexBasis='20%'>
+                <Flex  flexDirection='column' flexBasis='20%'>
                     <Image src={`https://image.tmdb.org/t/p/original/${item?.poster_path}`} width='100%' fallbackSrc="/placeholder.jpg"/>
-                    <Flex flexDirection='column' margin='0.5rem 1rem' >
+                    <Flex flexDirection='column' margin='0.5rem 0'>
                         <Text as='h2' fontSize='lg' fontWeight='black' color='#fff' padding='0.5rem 0'>{item?.original_title}</Text>
                         <Text as='h3' fontSize='md' fontWeight='bold' color='#C0C0C0' padding='0 0 1rem 0'>{item.tagline}</Text>
                         <Flex gap='0.5rem'>
@@ -85,27 +95,33 @@ const ItemDetails = ({type = 'movie'}) => {
 
                     </Flex>
                 </Flex>
-                <Flex flexBasis='70%'>
-                    {item.trailer ? 
-                        <AspectRatio width='100%' maxH='50%' ratio={16/9}>
-                            <iframe //HurjfO_TDlQ
-                             src={`https://www.youtube.com/embed/${item?.trailer[0].key}`}
-                             
-                             />
-                        </AspectRatio>
+                    <Flex flexBasis='70%' flexDirection='column' gap='2rem'>
+                        <Flex width='100%' height='40rem'>
+                            {item.trailer ? 
+                                // <AspectRatio width='1120px' height='630px' ratio={16/9}>
+                                    <iframe width='100%' height='100%'
+                                    src={`https://www.youtube.com/embed/${item?.trailer[0].key}`}
+                                    
+                                    />
+                                // </AspectRatio>
 
-                        :
-                        <Spinner 
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='main.100'
-                            size='xl'
-                            margin='300px auto'
-                        />
-                    
-                    }
-                </Flex>
+                                :
+                                <Spinner 
+                                    thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color='main.100'
+                                    size='xl'
+                                    margin='300px auto'
+                                />
+                            
+                            }
+                        </Flex>
+                        <Flex flexDirection='column'>
+                            <Text fontSize='2xl' fontWeight='black' color='#fff'>You might also like:</Text>
+                            <MoviesGrid currentItems={item?.similar?.results} noResults={similarNoResults}/>
+                        </Flex>
+                    </Flex>
             </Flex>
         </Box>
     )

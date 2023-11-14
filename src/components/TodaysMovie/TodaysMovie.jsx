@@ -17,7 +17,7 @@ import {
 
 /* eslint-disable react/prop-types */
 const TodaysMovie = ({ movieOfTheDay }) => {
-  console.log(movieOfTheDay);
+
   return (
     <Box as='section' {...todaysMovieContainer}>
       <Text as='h2' id='todays-movie' {...todaysMovieTitle}>Movie of the day</Text>
