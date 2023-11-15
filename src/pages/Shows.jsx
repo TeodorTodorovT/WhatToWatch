@@ -84,6 +84,7 @@ const Shows = () => {
                 <MoviesGrid
                     currentItems={currentShows}
                     noResults={noResults}
+                    type={'tv'}
                 />
                 <Button {...buttonStyles} width='10rem' margin='1rem 0' isDisabled={currentShows.length === numberOfShows ? true : false} onClick={() => loadNextPage()}>
                     <Text zIndex='1' color='#fff'>Load More</Text>

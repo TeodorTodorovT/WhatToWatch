@@ -49,10 +49,10 @@ export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1901-0
   }
 }
 
-export const getMovie = async (id) =>{
+export const getItem = async (id, type) =>{
   try {
     const response = await fetch(
-      `${baseURL}/movie/${id}`,
+      `${baseURL}/${type}/${id}`,
       optionsGet
     )
     const data = await response.json();
@@ -62,10 +62,10 @@ export const getMovie = async (id) =>{
   }
 }
 
-export const getMovieProviders = async (id) => {
+export const getItemProviders = async (id, type) => {
   try {
     const response = await fetch(
-      `${baseURL}/movie/${id}/watch/providers`,
+      `${baseURL}/${type}/${id}/watch/providers`,
       optionsGet
     )
     const data = await response.json();
@@ -75,10 +75,10 @@ export const getMovieProviders = async (id) => {
   }
 }
 
-export const getMovieTrailer = async (id) => {
+export const getItemTrailer = async (id, type) => {
   try {
     const response = await fetch(
-      `${baseURL}/movie/${id}/videos`,
+      `${baseURL}/${type}/${id}/videos`,
       optionsGet
     )
     const data = await response.json();
@@ -89,14 +89,13 @@ export const getMovieTrailer = async (id) => {
   }
 }
 
-export const getSimilarMovies = async (id) => {
+export const getSimilarItems = async (id, type) => {
   try {
     const response = await fetch(
-      `${baseURL}/movie/${id}/recommendations`,
+      `${baseURL}/${type}/${id}/similar`,
       optionsGet
     )
     const data = await response.json();
-    
     return data;
   } catch (error) {
     console.log(error);

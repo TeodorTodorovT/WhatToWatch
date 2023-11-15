@@ -37,7 +37,7 @@ const TodaysMovie = ({ movieOfTheDay }) => {
 
             <Text {...cardText}>{movieOfTheDay?.overview}</Text>
             <Button {...buttonStyles}>
-            <ChakraLink as={ReactRouterLink} to={`/movie/${movieOfTheDay.id}`} zIndex='1' color='#fff'>Learn More</ChakraLink>
+            <ChakraLink as={ReactRouterLink} to={`/movie/details/${movieOfTheDay.id}`} zIndex='1' color='#fff'>Learn More</ChakraLink>
             </Button>
             <Text {...cardRating}>{movieOfTheDay?.vote_average?.toFixed(1)}</Text>
           </CardBody>

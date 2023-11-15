@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 
-const MovieCard = ({ item }) => {
+const MovieCard = ({ item, type = 'movie' }) => {
     const navigate = useNavigate();
     return (
         <Card
@@ -19,7 +19,7 @@ const MovieCard = ({ item }) => {
             width='300px'
             height='300px'
             cursor='pointer'
-            onClick={() => navigate(`/movie/${item.id}`)}
+            onClick={() => navigate(`/${type}/details/${item.id}`)}
         >
             <Image
                 position='absolute'

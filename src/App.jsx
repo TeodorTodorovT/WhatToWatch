@@ -4,7 +4,7 @@ import Movies from "./pages/Movies";
 import Shows from "./pages/Shows";
 import Header from "./components/Header/Header";
 import ItemDetails from './pages/ItemDetails';
-import { HOME_PAGE, MOVIES_PAGE, SHOWS_PAGE, MOVIE_DETAILS_PAGE } from './common/routes';
+import { HOME_PAGE, MOVIES_PAGE, SHOWS_PAGE, DETAILS_PAGE } from './common/routes';
 
 
 
@@ -17,7 +17,7 @@ function App() {
         <Route path={HOME_PAGE} element={<Home />}></Route>
         <Route path={MOVIES_PAGE} element={<Movies />}></Route>
         <Route path={SHOWS_PAGE} element={<Shows />}></Route>
-        <Route path={MOVIE_DETAILS_PAGE} element={<ItemDetails/>}></Route>
+        <Route path={DETAILS_PAGE} element={<ItemDetails/>}></Route>
       </Routes>
     </>
   )
