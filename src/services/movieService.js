@@ -48,3 +48,56 @@ export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1901-0
     console.log(error);
   }
 }
+
+export const getItem = async (id, type) =>{
+  try {
+    const response = await fetch(
+      `${baseURL}/${type}/${id}`,
+      optionsGet
+    )
+    const data = await response.json();
+    return data;
+  } catch (error){
+    console.log(error);
+  }
+}
+
+export const getItemProviders = async (id, type) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/${type}/${id}/watch/providers`,
+      optionsGet
+    )
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getItemTrailer = async (id, type) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/${type}/${id}/videos`,
+      optionsGet
+    )
+    const data = await response.json();
+    const result = data.results.filter(item => item.type === 'Trailer');
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getSimilarItems = async (id, type) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/${type}/${id}/similar`,
+      optionsGet
+    )
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}

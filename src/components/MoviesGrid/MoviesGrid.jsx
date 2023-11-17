@@ -1,15 +1,14 @@
 import { Flex, Text, Spinner } from "@chakra-ui/react"
-import MovieCard from "../movieCard/MovieCard"
+import MovieCard from "../MovieCard/MovieCard"
 
-const MoviesGrid = ({currentItems, noResults}) => {
-
+const MoviesGrid = ({currentItems = [], noResults, type='movie'}) => {
     return (
         <Flex flexWrap='wrap'>
             {
                 currentItems.length > 0 && !noResults ?
-                    currentItems?.map(movie => {
+                    currentItems?.map(item => {
                         return (
-                            <MovieCard movie={movie} key={movie.id} />
+                            <MovieCard item={item} key={item.id} type={type} />
                         )
                     })
                     : currentItems.length === 0 && noResults ?
