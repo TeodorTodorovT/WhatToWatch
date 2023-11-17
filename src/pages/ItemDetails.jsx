@@ -9,8 +9,6 @@ import MoviesGrid from "../components/MoviesGrid/MoviesGrid";
 const ItemDetails = () => {
     const { id, type } = useParams();
     const [item, setitem] = useState({})
-    // const [similarNoResults, setSimilarNoResults] = useState(false);
-    // console.log(similarNoResults);
 
 
     useEffect(() => {
@@ -19,19 +17,18 @@ const ItemDetails = () => {
             const providers = await getItemProviders(id, type);
             const trailer = await getItemTrailer(id, type);
             const similar = await getSimilarItems(id, type)
-            setitem({ ...movieData, providers, trailer, similar});
+            setitem({ ...movieData, providers, trailer, similar });
 
         }
         fetchMovie();
     }, [id, type]);
 
-    console.log(item);
 
     return (
         <Box backgroundColor='background.100' >
-            <Flex gap='4rem' padding='10rem 0' margin='0 2rem'>
-                <Flex flexDirection='column' flexBasis='20%'>
-                    <Image src={`https://image.tmdb.org/t/p/original/${item?.poster_path}`} width='100%' fallbackSrc="/placeholder.jpg" />
+            <Flex gap='4rem' padding={{ base: '15rem 0', sm: '10rem 0' }} margin='0 2rem' flexDirection={{ base: 'column', lg: 'row' }} >
+                <Flex flexDirection={{ base: 'column', md: 'row', lg: 'column' }} flexBasis='20%' alignItems={{ base: 'center', md: 'normal' }}>
+                    <Image src={`https://image.tmdb.org/t/p/original/${item?.poster_path}`} fallbackSrc="/placeholder.jpg" fit='contain' width={{ base: '60%', lg: '100%' }} marginRight={{ base: '1rem', lg: '0' }} />
                     <Flex flexDirection='column' margin='0.5rem 0'>
                         <Text as='h2' fontSize='lg' fontWeight='black' color='#fff' padding='0.5rem 0'>{item?.original_title}</Text>
                         <Text as='h3' fontSize='md' fontWeight='bold' color='#C0C0C0' padding='0 0 1rem 0'>{item.tagline}</Text>
@@ -49,11 +46,28 @@ const ItemDetails = () => {
                         </Flex>
                         <Flex gap='0.5rem'>
                             <Text color='#e1e1e1' fontWeight='normal'>Released on:</Text>
-                            <Text color='#afafaf'>{item?.release_date}</Text>
+                            {
+                                type === 'movie'
+                                    ? <Text color='#afafaf'>{item?.release_date}</Text>
+                                    : <Text color='#afafaf'>{item?.first_air_date}</Text>
+                            }
+
                         </Flex>
                         <Flex gap='0.5rem'>
-                            <Text color='#e1e1e1' fontWeight='normal'>Duration:</Text>
-                            <Text color='#afafaf'>{item?.runtime} mins</Text>
+                            {
+                                type === 'movie'
+                                    ?
+                                    <>
+                                        <Text color='#e1e1e1' fontWeight='normal'>Duration:</Text>
+                                        <Text color='#afafaf'>{item?.runtime} mins</Text>
+                                    </>
+                                    :
+                                    <>
+                                        <Text color='#e1e1e1' fontWeight='normal'>Number of episodes:</Text>
+                                        <Text color='#afafaf'>{item?.number_of_episodes}</Text>
+                                    </>
+                            }
+
                         </Flex>
                         <Flex flexDirection='column'>
                             <Text color='#e1e1e1' fontWeight='normal'>Overview:</Text>
@@ -65,7 +79,7 @@ const ItemDetails = () => {
                                 <Text color='#e1e1e1' fontWeight='thin' fontSize='xs'>*US region*</Text>
                                 <Flex flexWrap='wrap' gap='4px'>
                                     {item?.providers?.results?.US?.buy.map(provider =>
-                                        <Image key={provider.link + provider.logo_path} src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} width='20%' fallbackSrc="/placeholder.jpg" />
+                                        <Image key={provider.link + provider.logo_path} src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} width={{ base: '10%', md: '15%', lg: '20%' }} fallbackSrc="/placeholder.jpg" />
                                     )}
                                 </Flex>
                             </Flex>
@@ -76,7 +90,7 @@ const ItemDetails = () => {
                                 <Text color='#e1e1e1' fontWeight='thin' fontSize='xs'>*US region*</Text>
                                 <Flex flexWrap='wrap' gap='4px'>
                                     {item?.providers?.results?.US?.rent.map(provider =>
-                                        <Image key={provider.link + provider.logo_path} src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} width='20%' fallbackSrc="/placeholder.jpg" />
+                                        <Image key={provider.link + provider.logo_path} src={`https://image.tmdb.org/t/p/original/${provider.logo_path}`} width={{ base: '10%', md: '15%', lg: '20%' }} fallbackSrc="/placeholder.jpg" />
                                     )}
                                 </Flex>
                             </Flex>
@@ -91,7 +105,7 @@ const ItemDetails = () => {
                     </Flex>
                 </Flex>
                 <Flex flexBasis='70%' flexDirection='column' gap='2rem'>
-                    <Flex width='100%' height='40rem'>
+                    <Flex width='100%' height={{ base: '20rem', md: '30rem', lg: '40rem' }}>
                         {item.trailer && item.trailer.length > 0 ?
                             <iframe width='100%' height='100%'
                                 src={`https://www.youtube.com/embed/${item?.trailer[0]?.key}`}
