@@ -21,7 +21,7 @@ export const getMovieOfTheDay = async () =>{
       }
 }
 
-export const getRandomMovie = async () =>{
+export const getRandomMovieHero = async () =>{
       try {
         const response = await fetch(`${baseURL}/trending/movie/day?language=en-US`, optionsGet)
         const data = await response.json();
@@ -83,6 +83,7 @@ export const getItemTrailer = async (id, type) => {
     )
     const data = await response.json();
     const result = data.results.filter(item => item.type === 'Trailer');
+    
     return result;
   } catch (error) {
     console.log(error);
@@ -97,6 +98,22 @@ export const getSimilarItems = async (id, type) => {
     )
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getRandomMovie = async () => {
+  const page = Math.floor(Math.random() * 10) + 1;
+  const movie = Math.floor(Math.random() * 20);
+  try {
+    const response = await fetch(
+      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&vote_average.gte=6.5&vote_count.gte=1000`,
+      optionsGet
+    )
+    const data = await response.json();
+    
+    return data?.results[movie]?.id;
   } catch (error) {
     console.log(error);
   }

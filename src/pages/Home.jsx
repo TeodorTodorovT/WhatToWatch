@@ -3,7 +3,7 @@ import TodaysMovie from "../components/TodaysMovie/TodaysMovie"
 
 import { useEffect, useState } from "react"
 
-import { getMovieOfTheDay, getRandomMovie } from "../services/movieService"
+import { getMovieOfTheDay, getRandomMovieHero } from "../services/movieService"
 
 const Home = () => {
   const [movieOfTheDay, setMovieOfTheDay] = useState({})
@@ -16,7 +16,7 @@ const Home = () => {
       setMovieOfTheDay(movie)
     }
     const fetchRandomMovie = async () => {
-      const movie = await getRandomMovie()
+      const movie = await getRandomMovieHero()
       setRandomMovie(movie)
     }
     fetchMovieOfTheDay();

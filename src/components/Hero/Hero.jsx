@@ -1,9 +1,16 @@
 import { Text, Flex, Button, ButtonGroup } from "@chakra-ui/react"
 import { heroContainer, heroTitleContainer, heroTitle, buttonStyles } from "./Hero.theme"
+import { getRandomMovie } from "../../services/movieService"
+import { useNavigate } from "react-router-dom"
 
 /* eslint-disable react/prop-types */
 const Hero = ({ randomMovie }) => {
+  const navigate = useNavigate();
 
+  const goToRandomMovie = async () => {
+    const randomMovieId = await getRandomMovie();
+    navigate(`/movie/details/${randomMovieId}`)
+  }
 
   return (
     <Flex
@@ -20,7 +27,7 @@ const Hero = ({ randomMovie }) => {
           <Button {...buttonStyles} onClick={() => {window.location.href='#todays-movie'}}>
             <Text zIndex='1' color='#fff'>Todays Movie</Text>
           </Button>
-          <Button {...buttonStyles}>
+          <Button {...buttonStyles} onClick={() => goToRandomMovie()}>
             <Text zIndex='1' color='#fff'>Random Movie</Text>
           </Button>
         </ButtonGroup>
