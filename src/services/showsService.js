@@ -15,7 +15,7 @@ export const getShows = async (pageNumber, showsSort, releaseDateGTE = '1901-01-
 
   try {
     const response = await fetch(
-      `${baseURL}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&first_air_date.gte=${releaseDateGTE}-01-01&first_air_date.lte=${releaseDateLTE}-12-31&sort_by=${showsSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=1000&with_genres=${genres}`,
+      `${baseURL}/discover/tv?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&first_air_date.gte=${releaseDateGTE}-01-01&first_air_date.lte=${releaseDateLTE}-12-31&sort_by=${showsSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=300&with_genres=${genres}`,
       optionsGet
     )
     const data = await response.json();

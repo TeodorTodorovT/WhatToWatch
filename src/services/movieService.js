@@ -35,7 +35,7 @@ export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1901-0
 
   try {
     const response = await fetch(
-      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&primary_release_date.gte=${releaseDateGTE}-01-01&primary_release_date.lte=${releaseDateLTE}-12-31&sort_by=${moviesSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=1000&with_genres=${genres}`,
+      `${baseURL}/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNumber}&primary_release_date.gte=${releaseDateGTE}-01-01&primary_release_date.lte=${releaseDateLTE}-12-31&sort_by=${moviesSort}&vote_average.gte=${voteAverageGTE}&vote_average.lte=${voteAverageLTE}&vote_count.gte=300&with_genres=${genres}`,
       optionsGet
     )
     const data = await response.json();
@@ -114,6 +114,21 @@ export const getRandomMovie = async () => {
     const data = await response.json();
     
     return data?.results[movie]?.id;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getSearch = async (searchQuery, pageNumber) => {
+  console.log(pageNumber);
+  try {
+    const response = await fetch(
+      `${baseURL}/search/multi?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`,
+      optionsGet
+    )
+    const data = await response.json();
+    
+    return data;
   } catch (error) {
     console.log(error);
   }
