@@ -25,11 +25,13 @@ const Header = () => {
   const handleChange = (e) => setSearchQuery(e.target.value)
 
   const handleSearch = () =>{
-    navigate(`/search-results/${searchQuery}`)
+    if(searchQuery.trim() !== ''){
+      navigate(`/search-results/${searchQuery}`)
+    }
   }
 
   const handleEnter = (e) =>{
-    if (e.key === 'Enter'){
+    if (e.key === 'Enter' && searchQuery.trim() !== ''){
       navigate(`/search-results/${searchQuery}`)
     }
   }
