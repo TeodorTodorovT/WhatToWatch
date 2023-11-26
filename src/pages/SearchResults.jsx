@@ -12,6 +12,7 @@ const SearchResults = () => {
     const [pageNumber, setPageNumber] = useState(1);
     const [noResults, setNoResults] = useState(false);
 
+
     useEffect(() => {
       setCurrentMovies([])
     }, [searchQuery])
@@ -62,7 +63,7 @@ const SearchResults = () => {
                     <Text as='p'><span style={{ 'fontWeight': 'bold' }}>{numberOfMovies}</span> results</Text>
                 </Flex>
                 <MoviesGrid
-                    currentItems={currentMovies}
+                    currentItems={currentMovies.filter(m => m.vote_count >= 300)}
                     noResults={noResults}
                 />
                 <Button {...buttonStyles} width='10rem' margin='1rem 0' isDisabled={currentMovies.length === numberOfMovies ? true : false} onClick={() => loadNextPage()}>
