@@ -15,9 +15,13 @@ export const getMovieOfTheDay = async () =>{
       try {
         const response = await fetch(`${baseURL}/trending/movie/day?language=en-US`, optionsGet)
         const data = await response.json();
-        return data.results[0];
+        if(data.success === false){
+          return data
+        }else {
+          return data.results[0];
+        }
       } catch (error) {
-        console.log(error);
+        return {success: false}
       }
 }
 
@@ -25,9 +29,13 @@ export const getRandomMovieHero = async () =>{
       try {
         const response = await fetch(`${baseURL}/trending/movie/day?language=en-US`, optionsGet)
         const data = await response.json();
-        return data.results[Math.floor(Math.random()*data.results.length)];
+        if(data.success === false){
+          return data
+        }else {
+          return data.results[Math.floor(Math.random()*data.results.length)];
+        }
       } catch (error) {
-        console.log(error);
+        return {success: false}
       }
 }
 
@@ -39,13 +47,16 @@ export const getMovies = async (pageNumber, moviesSort, releaseDateGTE = '1901-0
       optionsGet
     )
     const data = await response.json();
-    
-    return {
-      movies: data.results,
-      totalMovies: data.total_results
-    };
+    if(data.success === false){
+      return data
+    }else {
+      return {
+        movies: data.results,
+        totalMovies: data.total_results
+      };
+    }
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }
 
@@ -58,7 +69,7 @@ export const getItem = async (id, type) =>{
     const data = await response.json();
     return data;
   } catch (error){
-    console.log(error);
+    return {success: false}
   }
 }
 
@@ -68,10 +79,12 @@ export const getItemProviders = async (id, type) => {
       `${baseURL}/${type}/${id}/watch/providers`,
       optionsGet
     )
+    
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }
 
@@ -82,11 +95,14 @@ export const getItemTrailer = async (id, type) => {
       optionsGet
     )
     const data = await response.json();
-    const result = data.results.filter(item => item.type === 'Trailer');
-    
-    return result;
+    if(data.success === false){
+      return data;
+    }else {
+      const result = data.results.filter(item => item.type === 'Trailer');
+      return result;
+    }
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }
 
@@ -99,7 +115,7 @@ export const getSimilarItems = async (id, type) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }
 
@@ -112,15 +128,18 @@ export const getRandomMovie = async () => {
       optionsGet
     )
     const data = await response.json();
+    if(data.success === false){
+      return data;
+    }else {
+      return data?.results[movie]?.id;
+    }
     
-    return data?.results[movie]?.id;
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }
 
 export const getSearch = async (searchQuery, pageNumber) => {
-  console.log(pageNumber);
   try {
     const response = await fetch(
       `${baseURL}/search/multi?query=${searchQuery}&include_adult=false&language=en-US&page=${pageNumber}`,
@@ -130,6 +149,6 @@ export const getSearch = async (searchQuery, pageNumber) => {
     
     return data;
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }

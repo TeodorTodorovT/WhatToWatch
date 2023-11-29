@@ -5,10 +5,11 @@ import { useEffect, useState } from "react"
 
 import { getMovieOfTheDay, getRandomMovieHero } from "../services/movieService"
 
+
 const Home = () => {
   const [movieOfTheDay, setMovieOfTheDay] = useState({})
   const [randomMovie, setRandomMovie] = useState({})
-
+  
 
   useEffect(() => {
     const fetchMovieOfTheDay = async () => {
