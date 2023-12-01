@@ -19,12 +19,16 @@ export const getShows = async (pageNumber, showsSort, releaseDateGTE = '1901-01-
       optionsGet
     )
     const data = await response.json();
-    
-    return {
-      shows: data.results,
-      totalShows: data.total_results
-    };
+    if(data.success === false){
+      return data
+    }else {
+      return {
+        shows: data.results,
+        totalShows: data.total_results
+      };
+    }
+
   } catch (error) {
-    console.log(error);
+    return {success: false}
   }
 }

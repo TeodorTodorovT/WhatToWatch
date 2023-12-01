@@ -1,4 +1,4 @@
-import { Flex, Text, Button } from "@chakra-ui/react"
+import { Flex, Text, Button, Box } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { getMovies } from "../services/movieService"
 import { buttonStyles } from "../components/Hero/Hero.theme"
@@ -66,8 +66,21 @@ const Movies = () => {
             backgroundColor='background.100'
             flexDirection='row'
             height='100%'
-
+            position='relative'
+            overflow='hidden'
         >
+            
+            <Box
+                position='absolute'
+                top='0'
+                right='-20%'
+                backgroundColor='background.200'
+                borderRadius='30% 70% 70% 30% / 30% 30% 70% 70% '
+                width='100%'
+                height='100%'
+                zIndex='0'
+            />
+            
             {currentMovies.success !== false ?
                 <>
                     <FilterControlls

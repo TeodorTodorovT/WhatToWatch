@@ -4,7 +4,7 @@ import {isoLangs} from "../../common/isoLangs"
 const ItemInformation = ({item, type}) => {
     return (
         item?.success !== false ?
-        <Flex flexDirection={{ base: 'column', md: 'row', lg: 'column' }} flexBasis='20%' alignItems={{ base: 'center', md: 'normal' }}>
+        <Flex flexDirection={{ base: 'column', md: 'row', lg: 'column' }} flexBasis='20%' alignItems={{ base: 'center', md: 'normal' }} zIndex='100'>
             <Image src={`https://image.tmdb.org/t/p/original/${item?.poster_path}`} fallbackSrc="/placeholder.jpg" fit='contain' width={{ base: '60%', lg: '100%' }} marginRight={{ base: '1rem', lg: '0' }} />
             <Flex flexDirection='column' margin='0.5rem 0'>
                 <Text as='h2' fontSize='lg' fontWeight='black' color='#fff' padding='0.5rem 0'>{item?.original_title}</Text>
