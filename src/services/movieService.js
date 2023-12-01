@@ -81,7 +81,6 @@ export const getItemProviders = async (id, type) => {
     )
     
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     return {success: false}

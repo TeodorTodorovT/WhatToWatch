@@ -2,6 +2,7 @@ export const todaysMovieContainer = {
     padding:'2rem',
     backgroundColor:'main.100',
     boxShadow:'1px -50px 122px 100px rgba(205,53,54,1)',
+    
 }
 
 export const todaysMovieTitle = {
@@ -18,7 +19,9 @@ export const card = {
         base: 'column',
         md: 'row' 
     },
-    boxShadow: '1px 1px 50px -11px rgba(0,0,0,0.75)'
+    boxShadow: '1px 1px 50px -11px rgba(0,0,0,0.75)',
+    position:'relative',
+    overflow:'hidden',
 }
 
 export const cardImage = {
@@ -27,12 +30,13 @@ export const cardImage = {
       base: '100%',
       md: '60%',
       lg: '70%',
-    }
+    },
 }
 
 export const cardContentContainer = {
     backgroundColor: 'secondary.100',
     color: '#fff',
+    
 }
 
 export const cardTitle = {
@@ -45,7 +49,7 @@ export const cardText = {
     fontSize: {
         base: 'md',
         sm: 'xl'
-    }
+    },
 }
 
 export const cardRating = {
@@ -77,6 +81,7 @@ export const featureInfoContainer = {
     },
     textAlign: 'center',
     textShadow: '2px 2px 50px rgba(0,0,0,1)',
+    
 }
 
 export const buttonStyles = {
