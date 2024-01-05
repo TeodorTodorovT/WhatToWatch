@@ -14,7 +14,7 @@ export const headerStyles = {
     },
     boxShadow: '1px 20px 100px 100px rgba(0,0,0,0.35)',
     padding: '0.5rem 0',
-    zIndex: '999',
+    zIndex: '100',
 };
 
 export const active = {

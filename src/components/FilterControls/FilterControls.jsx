@@ -85,7 +85,7 @@ const FilterControlls = ({ setPageNumber, setCurrentItems, setItemsFilter }) => 
                 overflow= "hidden"
                 boxShadow=  '1px 1px 50px -11px rgba(0,0,0,0.75)'
                 borderRadius= '0 40px 40px 0'
-                zIndex= '998'
+                zIndex= '100'
                 display={{ base: 'flex', md: 'none' }}
                 _before= {{
                 position: "absolute",
@@ -125,7 +125,7 @@ const FilterControlls = ({ setPageNumber, setCurrentItems, setItemsFilter }) => 
                 top='10rem'
                 width='100%'
                 alignSelf='flex-start'
-                zIndex='997'
+                zIndex='100'
             >
                 <AccordionItem>
                     <h2>
@@ -250,7 +250,7 @@ const FilterControlls = ({ setPageNumber, setCurrentItems, setItemsFilter }) => 
                 backdropFilter='blur(4.6px)'
                 border='1px solid rgba(255, 255, 255, 0.1)'
                 display={{ base: 'none', md: 'flex' }}
-                zIndex='997'
+                zIndex='99'
             >
                 <AccordionItem >
                     <h2>
