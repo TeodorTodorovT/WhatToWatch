@@ -24,6 +24,7 @@ const SearchResults = () => {
                 searchQuery,
                 pageNumber
             )
+
             if (moviesData.success !== false) {
                 if (moviesData.total_results === 0) {
                     setNoResults(true);
