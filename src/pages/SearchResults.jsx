@@ -8,15 +8,19 @@ import MoviesGrid from "../components/MoviesGrid/MoviesGrid"
 const SearchResults = () => {
     const { searchQuery } = useParams();
     const [currentMovies, setCurrentMovies] = useState([]);
-
     const [pageNumber, setPageNumber] = useState(1);
     const [noResults, setNoResults] = useState(false);
+    const [numberOfLoaded, setNumberOfLoaded] = useState(30);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+
 
 
     useEffect(() => {
         setCurrentMovies([])
+        setPageNumber(1)
+        setNoResults(false)
+        setButtonDisabled(false)
     }, [searchQuery])
-
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -35,22 +39,30 @@ const SearchResults = () => {
                         setCurrentMovies(moviesData.results.filter(m => m.vote_count >= 300))
                     }
                     setNoResults(false);
+
+                    if(currentMovies.length <= numberOfLoaded && moviesData.total_pages > pageNumber) {
+                        setPageNumber(pageNumber + 1)
+                    }
+
+                    if(moviesData.total_pages <= pageNumber){
+                        setButtonDisabled(true)
+                    }
                 }
             } else {
                 setCurrentMovies(moviesData)
             }
-
+            if(currentMovies.length >= 120){
+                setButtonDisabled(true)
+            }
         }
-
-
         fetchMovies();
-
-
-    }, [pageNumber, searchQuery])
+    }, [searchQuery, pageNumber, numberOfLoaded]);
 
     const loadNextPage = () => {
-        setPageNumber(currentPage => currentPage += 1)
+        setPageNumber(pageNumber + 1)
+        setNumberOfLoaded(oldNumber => oldNumber + 30)
     }
+    
 
 
     return (
@@ -64,7 +76,7 @@ const SearchResults = () => {
                 width='100%'
                 height='100%'
                 zIndex='0'
-          />
+            />
             {currentMovies?.success !== false ?
                 <Flex
                     backgroundColor='background.100'
@@ -79,9 +91,12 @@ const SearchResults = () => {
                             currentItems={currentMovies}
                             noResults={currentMovies.length === 0 ? true : noResults}
                         />
-                        <Button {...buttonStyles} width='10rem' margin='1rem 0' isDisabled={currentMovies.length === 30 ? true : false} onClick={() => loadNextPage()}>
-                            <Text zIndex='1' color='#fff'>Load More</Text>
+                        {!noResults &&
+                        <Button {...buttonStyles} width='10rem' margin='1rem 0' isDisabled={buttonDisabled} onClick={() => loadNextPage()}>
+                            <Text zIndex='1' color='#fff'>{buttonDisabled ? 'No More Results' : 'Load More' }</Text>
                         </Button>
+                        }
+                        
                     </Flex>
                 </Flex>
                 :
